@@ -30,8 +30,7 @@ public class Reservation {
     @Column
     private String cancellationDetails;
 
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    @OneToOne(mappedBy = "reservation")
+    @ManyToOne
+    @JoinColumn(name = "vehicle_id",referencedColumnName = "id", nullable = false)
     private Set<Vehicle> rentSet;
 }
