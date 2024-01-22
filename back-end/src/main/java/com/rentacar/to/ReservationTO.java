@@ -1,0 +1,28 @@
+package com.rentacar.to;
+
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.sql.Date;
+
+public class ReservationTO implements Serializable {
+    private Integer id;
+    @NotNull(message = "Reservation date should not be null")
+    private Date reservationDate;
+
+    @NotNull(message = "Pickup date should not be null")
+    private Date pickupDate;
+
+    @NotNull(message = "Return date should not be null")
+    private Date returnDate;
+
+    @NotNull(message = "Number of days should not be null")
+    private int noOfDays;
+
+    private String cancellationDetails;
+    @NotNull(message = "vehicle should not be null")
+    private VehicleTO vehicle;
+
+    //toDo: future dates validation part
+
+
+}
