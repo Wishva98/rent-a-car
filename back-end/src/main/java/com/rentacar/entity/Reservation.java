@@ -15,7 +15,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table(name="reservation")
-public class Reservation {
+public class Reservation implements SuperEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
