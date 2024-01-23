@@ -11,7 +11,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table(name="vehicle")
-public class Vehicle {
+public class Vehicle implements SuperEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
