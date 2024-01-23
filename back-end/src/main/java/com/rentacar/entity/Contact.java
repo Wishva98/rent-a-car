@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Contact {
+public class Contact implements SuperEntity{
     @Id
     private String contactNo;
 

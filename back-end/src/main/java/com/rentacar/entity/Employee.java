@@ -10,7 +10,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Employee {
+public class Employee implements SuperEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
