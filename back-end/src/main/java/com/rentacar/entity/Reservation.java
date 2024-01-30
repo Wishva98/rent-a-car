@@ -31,6 +31,9 @@ public class Reservation implements SuperEntity{
     private String cancellationDetails;
 
     @ManyToOne
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @Setter(AccessLevel.NONE)
     @JoinColumn(name = "vehicle_id",referencedColumnName = "id", nullable = false)
     private Set<Vehicle> rentSet;
 }
