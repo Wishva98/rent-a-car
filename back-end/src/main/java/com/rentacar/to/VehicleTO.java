@@ -1,12 +1,18 @@
 package com.rentacar.to;
 
 import com.rentacar.util.PayMethod;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class VehicleTO implements Serializable {
     private Integer id;
     @NotNull(message = "Plate number should not be null")

@@ -31,5 +31,5 @@ public class Rent implements SuperEntity{
     @ManyToOne
     @JoinColumn(name = "customer_id",referencedColumnName = "id", nullable = false)
     private Customer customer;
-
+ 
 }

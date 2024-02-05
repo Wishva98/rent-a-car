@@ -1,11 +1,17 @@
 package com.rentacar.to;
 
 import com.rentacar.util.PayMethod;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class RentTO implements Serializable {
     //todo:  null or not auto generated or no?
     private Integer id;

@@ -20,6 +20,10 @@ public class Employee implements SuperEntity{
 
     @Column(length = 200,nullable = false,unique = true)
     private String email;
+    @Column(length = 300,nullable = false,name = "full_name")
+    private String fullName;
+    @Column(name = "address",nullable = false,length = 300)
+    private String address;
 
     @OneToMany(mappedBy = "id")
     @EqualsAndHashCode.Exclude

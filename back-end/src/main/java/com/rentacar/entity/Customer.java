@@ -29,6 +29,7 @@ public class Customer implements SuperEntity {
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
+    @Setter(AccessLevel.NONE)
     @OneToMany(mappedBy = "customer")
     private Set<Rent> rentSet;
 
