@@ -1,6 +1,7 @@
 package com.rentacar.entity;
 
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.awt.*;
@@ -22,8 +23,8 @@ public class Vehicle implements SuperEntity{
     @Column//(name = "image", nullable = false)
     @Lob
     private byte[] image;
-    @Column//(name = "image_path", nullable = false)
-    private String imagePath;
+    @Column
+    private MultipartFile imageFile;
     @Column
     private int millage;
     @Column
