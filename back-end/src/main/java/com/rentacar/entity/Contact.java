@@ -13,6 +13,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class Contact implements SuperEntity{
     @Id
+    @Column(name = "contact_number")
     private String contactNo;
 
     @JoinColumn(name = "employee_id",referencedColumnName = "id",nullable = false)
