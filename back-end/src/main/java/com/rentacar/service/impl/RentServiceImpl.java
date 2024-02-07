@@ -1,5 +1,6 @@
 package com.rentacar.service.impl;
 
+import com.rentacar.entity.Customer;
 import com.rentacar.entity.Rent;
 import com.rentacar.exception.AppException;
 import com.rentacar.repository.CustomerRepository;
@@ -9,6 +10,9 @@ import com.rentacar.service.util.RentTransformer;
 import com.rentacar.to.RentTO;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class RentServiceImpl implements RentService{
 
@@ -28,33 +32,57 @@ public class RentServiceImpl implements RentService{
         if(rentTO.getId() != null)throw new AppException(500,"Rent id has to be null");
         //todo : check for reservation details
         Rent rent = rentTransformer.fromRentTo(rentTO);
-        rentRepository.save(rent);
-
-        return null;
+        try {
+            rentRepository.save(rent);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new AppException(500, "could not save rent");
+        }
+        RentTO savedRentTO = rentTransformer.toRentTO(rent);
+        return savedRentTO;
     }
 
     @Override
     public RentTO getRentById(Integer rentId) {
-        return null;
+        Optional<Rent> optRent = rentRepository.findById(rentId);
+        if(optRent.isEmpty())throw new AppException(500,"Rent does not exist");
+        Rent rent = optRent.get();
+        RentTO rentTO = rentTransformer.toRentTO(rent);
+        return rentTO;
     }
 
     @Override
     public void updateRent(RentTO rentTO) {
-
+//        Optional<Rent> optRent = rentRepository.findById(rentTO.getId());
+        if(!rentRepository.existsById(rentTO.getId()))throw new AppException(500,"Rent does not exist");
+        if(!customerRepository.existsById(rentTO.getCustomer().getId()))throw new AppException(500,"Customer associated with rent does not exist");
+        Rent rent = rentTransformer.fromRentTo(rentTO);
+        Rent newRent = rentRepository.save(rent);
     }
 
     @Override
     public void deleteRentById(Integer rentId) {
-
+        if(!rentRepository.existsById(rentId))throw new AppException(500,"Rent does not exist");
+        rentRepository.deleteById(rentId);
     }
 
     @Override
     public List<RentTO> getAllRents() {
-        return null;
+        List<Rent> rentList = rentRepository.findAll();
+        List<RentTO> rentTOList = rentList.stream().map(rent -> {
+            return rentTransformer.toRentTO(rent);
+        }).collect(Collectors.toList());
+        return rentTOList;
     }
 
     @Override
     public List<RentTO> getAllRentsByCustomerId(Integer customerId) {
-        return null;
+        Optional<Customer> optCustomer = customerRepository.findById(customerId);
+        if(optCustomer.isEmpty()) throw new AppException(500,"Customer does not exist");
+        Set<Rent> rentSet = optCustomer.get().getRentSet();
+        List<RentTO> rentTOList = rentSet.stream().map(rent -> {
+            return rentTransformer.toRentTO(rent);
+        }).collect(Collectors.toList());
+        return rentTOList;
     }
 }
