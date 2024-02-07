@@ -11,7 +11,6 @@ public class CustomerTransformer {
 
     public CustomerTransformer(ModelMapper mapper) {
         this.mapper = mapper;
-
     }
 
     public Customer fromCustomerTO(CustomerTO customerTO) {

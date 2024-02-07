@@ -49,6 +49,8 @@ public class CustomerServiceImpl implements CustomerService {
         try{
             Optional<Customer> optionalCustomer = customerRepository.findById(customerId);
             if(optionalCustomer.isEmpty())throw new AppException(500, "Could not find customer");
+            System.out.println();
+            System.out.println("This is the rent set = "+optionalCustomer.get().getRentSet());
             CustomerTO customerTO = customerTransformer.toCustomerTO(optionalCustomer.get());
             return customerTO;
         }catch (Exception e){
