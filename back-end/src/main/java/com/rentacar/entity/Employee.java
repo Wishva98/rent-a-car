@@ -25,7 +25,7 @@ public class Employee implements SuperEntity{
     @Column(name = "address",nullable = false,length = 300)
     private String address;
 
-    @OneToMany(mappedBy = "employee")
+    @OneToMany(mappedBy = "employee",cascade = CascadeType.ALL,orphanRemoval = true)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @Setter(AccessLevel.NONE)

@@ -14,17 +14,11 @@ public class Customer implements SuperEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "first_name",nullable = false)
-    private String firstName;
-    @Column(name = "last_name", nullable = false)
-    private String lastName;
-    @Column
-    private String house;
-    @Column(nullable = false)
-    private String city;
-    @Column(nullable = false)
-    private String country;
-    @Column(name = "driving_license",nullable = false)
+    @Column(name = "first_name",nullable = false,length = 300)
+    private String fullName;
+    @Column(length = 300)
+    private String address;
+    @Column(name = "driving_license",nullable = false,length = 20)
     private String drivingLicenseNumber;
 
     @EqualsAndHashCode.Exclude
