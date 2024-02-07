@@ -26,7 +26,7 @@ public class Vehicle implements SuperEntity{
     private String imagePath;
     @Column
     private int millage;
-    @Column
+    @Column(name = "`condition`")
     private String condition;
     @Column(name = "availability",nullable = false)
     private Boolean availability;
@@ -34,5 +34,5 @@ public class Vehicle implements SuperEntity{
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @OneToMany(mappedBy = "vehicle")
-    private Set<Reservation> rentSet;
+    private Set<Reservation> reservationSet;
 }

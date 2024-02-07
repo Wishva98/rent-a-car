@@ -35,5 +35,6 @@ public class Reservation implements SuperEntity{
     @EqualsAndHashCode.Exclude
     @Setter(AccessLevel.NONE)
     @JoinColumn(name = "vehicle_id",referencedColumnName = "id", nullable = false)
-    private Set<Vehicle> rentSet;
+//    private Set<Vehicle> rentSet;
+    private Vehicle vehicle;
 }
