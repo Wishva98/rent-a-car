@@ -8,7 +8,7 @@ public interface CustomerService {
     CustomerTO saveCustomer(CustomerTO customerTO);
     CustomerTO getCustomerById(Integer customerId);
     List<CustomerTO> getAllCustomers();
-    boolean deleteCustomerById(Integer customerId);
+    void deleteCustomerById(Integer customerId);
     void updateCustomer(CustomerTO customerTO);
 
 }

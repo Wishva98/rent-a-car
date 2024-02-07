@@ -24,7 +24,7 @@ public class Customer implements SuperEntity {
     private String city;
     @Column(nullable = false)
     private String country;
-    @Column(name = "driving_license",nullable = false)
+    @Column(name = "driving_license",nullable = false, unique = true)
     private String drivingLicenseNumber;
 
     @EqualsAndHashCode.Exclude
