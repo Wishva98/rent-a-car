@@ -12,5 +12,7 @@ public class AppInitializer {
     }
 
     @Bean
-    public ModelMapper mapper(){return new ModelMapper();}
+    public ModelMapper mapper(){
+        return new ModelMapper();
+    }
 }

@@ -30,11 +30,17 @@ public class Reservation implements SuperEntity{
     @Column
     private String cancellationDetails;
 
-    @ManyToOne
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    @Setter(AccessLevel.NONE)
-    @JoinColumn(name = "vehicle_id",referencedColumnName = "id", nullable = false)
-//    private Set<Vehicle> rentSet;
-    private Vehicle vehicle;
+    @ManyToMany
+    @JoinTable(name = "vehicle_reservation",joinColumns = @JoinColumn(name = "reservation_id",referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "vehicle_id",referencedColumnName = "id"))
+    private Set<Vehicle> vehicleSet;
+
+    public Reservation(int id, Date reservationDate, Date pickupDate, Date returnDate, int noOfDays, String cancellationDetails) {
+        this.id = id;
+        this.reservationDate = reservationDate;
+        this.pickupDate = pickupDate;
+        this.returnDate = returnDate;
+        this.noOfDays = noOfDays;
+        this.cancellationDetails = cancellationDetails;
+    }
 }

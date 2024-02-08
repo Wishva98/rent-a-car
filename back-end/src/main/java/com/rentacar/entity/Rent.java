@@ -24,7 +24,7 @@ public class Rent implements SuperEntity{
     private BigDecimal rentPrice;
     @Column(name = "damage_compensation")
     private BigDecimal damageCompensation;
-    @Column(name = "damage_details" )
+    @Column(name = "damage_details")
     private String damageDetails;
     @Column
     private BigDecimal total;
