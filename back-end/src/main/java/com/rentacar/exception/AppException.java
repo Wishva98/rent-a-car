@@ -1,8 +1,5 @@
 package com.rentacar.exception;
 
-import lombok.Getter;
-
-@Getter
 public class AppException extends RuntimeException {
     private final int errorCode;
 
@@ -10,13 +7,18 @@ public class AppException extends RuntimeException {
         this.errorCode = errorCode;
     }
 
-    public AppException(int errorCode,String message) {
+    public AppException(int errorCode, String message) {
         super(message);
         this.errorCode = errorCode;
     }
 
-    public AppException(int errorCode,String message, Throwable cause) {
+    public AppException(int errorCode, String message, Throwable cause) {
         super(message, cause);
+        this.errorCode = errorCode;
+    }
+
+    public AppException(int errorCode, Throwable cause) {
+        super(cause);
         this.errorCode = errorCode;
     }
 }
