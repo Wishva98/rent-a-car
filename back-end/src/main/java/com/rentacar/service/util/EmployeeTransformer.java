@@ -5,14 +5,12 @@ import com.rentacar.to.EmployeeTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
-import java.util.Set;
-
 
 @Component
-public class Transformer {
+public class EmployeeTransformer {
     private final ModelMapper modelMapper;
 
-    public Transformer(ModelMapper modelMapper) {
+    public EmployeeTransformer(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
     }
 

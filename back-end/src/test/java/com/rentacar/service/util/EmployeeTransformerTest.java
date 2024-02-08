@@ -11,13 +11,13 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class TransformerTest {
+class EmployeeTransformerTest {
     @Autowired
-    private Transformer transformer;
+    private EmployeeTransformer employeeTransformer;
     @Test
     void toEmployee() {
         EmployeeTO employeeTO = new EmployeeTO(5, "Sanath nishantha", "puththalam", "7012313V", "sanathNisha@gmail.com", Set.of("071-231231", "076-3413532"));
-        Employee employee = transformer.toEmployee(employeeTO);
+        Employee employee = employeeTransformer.toEmployee(employeeTO);
         System.out.println(employee);
         assertEquals(employeeTO.getId(),employee.getId());
 //        assertEquals(employeeTO.getContacts(),employee.getContacts());
@@ -26,7 +26,7 @@ class TransformerTest {
     @Test
     void fromEmployee() {
         Employee employee = new Employee(2, "7012313V", "sanathNisha@gmail.com", "Sanath nishantha", "puththalam");
-        EmployeeTO employeeTO = transformer.fromEmployee(employee);
+        EmployeeTO employeeTO = employeeTransformer.fromEmployee(employee);
         System.out.println(employeeTO);
         assertNull(employeeTO.getContacts());
     }

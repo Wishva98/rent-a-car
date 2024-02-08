@@ -1,4 +1,4 @@
-package com.rentacar.service;
+package com.rentacar.service.custom;
 
 import com.rentacar.to.RentTO;
 

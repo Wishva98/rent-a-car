@@ -1,24 +1,15 @@
 package com.rentacar.service.impl;
 
-import com.rentacar.entity.Rent;
 import com.rentacar.repository.RentRepository;
-import com.rentacar.service.CustomerService;
-import com.rentacar.service.RentService;
+import com.rentacar.service.custom.CustomerService;
 import com.rentacar.service.util.RentTransformer;
 import com.rentacar.to.CustomerTO;
-import com.rentacar.to.RentTO;
-import com.rentacar.util.PayMethod;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import javax.transaction.Transactional;
-
-import java.math.BigDecimal;
-
-import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 //@Transactional
 class CustomerServiceImplTest {
