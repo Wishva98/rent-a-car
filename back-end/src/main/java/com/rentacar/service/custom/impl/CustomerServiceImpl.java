@@ -1,9 +1,9 @@
-package com.rentacar.service.impl;
+package com.rentacar.service.custom.impl;
 
 import com.rentacar.entity.Customer;
 import com.rentacar.exception.AppException;
 import com.rentacar.repository.CustomerRepository;
-import com.rentacar.service.CustomerService;
+import com.rentacar.service.custom.CustomerService;
 import com.rentacar.service.util.CustomerTransformer;
 import com.rentacar.to.CustomerTO;
 import org.springframework.stereotype.Service;
@@ -88,11 +88,11 @@ public class CustomerServiceImpl implements CustomerService {
         Optional<Customer> optCustomer = customerRepository.findById(customerTO.getId());
         if(optCustomer.isEmpty())throw new AppException(500, "Customer does not exist");
         Customer customer = optCustomer.get();//Todo :  use when considering relationships;
-        customer.setFirstName(customerTO.getFirstName());
-        customer.setLastName(customerTO.getLastName());
-        customer.setHouse(customerTO.getHouse());
-        customer.setCity(customerTO.getCity());
-        customer.setCountry(customerTO.getCountry());
+//        customer.setFirstName(customerTO.getFirstName());
+//        customer.setLastName(customerTO.getLastName());
+//        customer.setHouse(customerTO.getHouse());
+//        customer.setCity(customerTO.getCity());
+//        customer.setCountry(customerTO.getCountry());
         customer.setDrivingLicenseNumber(customerTO.getDrivingLicenseNumber());
         customerRepository.save(customer);
     }

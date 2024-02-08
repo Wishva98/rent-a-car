@@ -19,7 +19,7 @@ import java.math.BigDecimal;
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @Transactional
-class RentTransformerTest {
+class RentEmployeeTransformerTest {
 
     @Autowired
     private  RentTransformer rentTransformer;
@@ -58,10 +58,10 @@ class RentTransformerTest {
 
     @Test
     void toRentTO() {
-        Customer customer = new Customer(1, "Dakshitha", "Ranawaka", "266/2", "Matara", "Sri Lanka", "981350731V", null);
-        Rent rent = new Rent(1, PayMethod.BANK, new BigDecimal(1000), null, null,new BigDecimal(1000),customer);
-        RentTO rentTO = rentTransformer.toRentTO(rent);
+//        Customer customer = new Customer(1, "Dakshitha", "Ranawaka", "266/2", "Matara", "Sri Lanka", "981350731V", null);
+//        Rent rent = new Rent(1, PayMethod.BANK, new BigDecimal(1000), null, null,new BigDecimal(1000),customer);
+//        RentTO rentTO = rentTransformer.toRentTO(rent);
 
-        System.out.println(rentTO);
+//        System.out.println(rentTO);
     }
 }

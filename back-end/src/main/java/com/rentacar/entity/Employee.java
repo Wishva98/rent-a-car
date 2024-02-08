@@ -31,6 +31,13 @@ public class Employee implements SuperEntity{
     @Setter(AccessLevel.NONE)
     private Set<Contact> contacts;
 
+    public Employee(String nic, String email, String fullName, String address) {
+        this.nic = nic;
+        this.email = email;
+        this.fullName = fullName;
+        this.address = address;
+    }
+
     public Employee(int id, String nic, String email, String fullName, String address) {
         this.id = id;
         this.nic = nic;

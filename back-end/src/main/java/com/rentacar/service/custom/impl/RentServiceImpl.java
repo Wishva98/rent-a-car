@@ -1,11 +1,11 @@
-package com.rentacar.service.impl;
+package com.rentacar.service.custom.impl;
 
 import com.rentacar.entity.Customer;
 import com.rentacar.entity.Rent;
 import com.rentacar.exception.AppException;
 import com.rentacar.repository.CustomerRepository;
 import com.rentacar.repository.RentRepository;
-import com.rentacar.service.RentService;
+import com.rentacar.service.custom.RentService;
 import com.rentacar.service.util.RentTransformer;
 import com.rentacar.to.RentTO;
 
