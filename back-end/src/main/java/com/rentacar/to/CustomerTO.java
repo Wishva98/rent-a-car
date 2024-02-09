@@ -18,19 +18,10 @@ public class CustomerTO implements Serializable {
     private Integer id;
     @NotBlank(message = "First name Should not be null")
     @Pattern(regexp = "^[A-Za-z ]{2,}$", message = "Invalid name")
-    private String firstName;
-    @NotBlank(message = "Last name Should not be null")
-    @Pattern(regexp = "^[A-Za-z ]{2,}$", message = "Invalid name")
-    private String lastName;
+    private String fullName;
     @NotBlank(message = "House details Should not be null")
     @Length(min = 2, message = "Invalid house details")
-    private String house;
-    @NotBlank(message = "City details Should not be null")
-    @Length(min = 2, message = "Invalid city details")
-    private String city;
-    @NotBlank(message = "Country details Should not be null")
-    @Length(min = 2, message = "Invalid country details")
-    private String country;
+    private String address;
     @NotBlank(message = "Driving license details Should not be null")
     @Length(min = 2, message = "Invalid license details")
     private String drivingLicenseNumber;

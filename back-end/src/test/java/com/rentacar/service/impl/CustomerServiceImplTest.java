@@ -33,7 +33,7 @@ class CustomerServiceImplTest {
 
     @Test
     void saveCustomer() {
-        CustomerTO customerTO = new CustomerTO(null, "Dakshitha 2", "Ranawaka", "266/2", "Matara", "Sri Lanka", "981350731V");
+        CustomerTO customerTO = new CustomerTO(null, "Dakshitha 2", "Matara", "981350731V");
         CustomerTO savedCustomerTO = customerService.saveCustomer(customerTO);
         System.out.println(savedCustomerTO);
     }
