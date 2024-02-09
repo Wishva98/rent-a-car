@@ -27,6 +27,9 @@ class CustomerEmployeeTransformerTest {
 
     @Test
     void fromCustomerTO() {
+        CustomerTO customerTO = new CustomerTO(null, "Dakshitha 2", "Matara", "981350731V","+94769785581","hasundra");
+        Customer customer = customerTransformer.fromCustomerTO(customerTO);
+        assertEquals(customer.getContactNo(),"0769785581");
     }
 
     @Test

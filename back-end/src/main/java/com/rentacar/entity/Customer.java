@@ -20,6 +20,10 @@ public class Customer implements SuperEntity {
     private String address;
     @Column(name = "driving_license",nullable = false,length = 20)
     private String drivingLicenseNumber;
+    @Column(name = "contact_no", nullable = false, unique = true,length = 15)
+    private String contactNo;
+    @Column(unique = true, length = 100)
+    private String email;
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude

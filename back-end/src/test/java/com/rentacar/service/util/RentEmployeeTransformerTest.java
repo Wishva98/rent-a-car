@@ -43,7 +43,7 @@ class RentEmployeeTransformerTest {
 
     @Test
     void fromRentTo() {
-        CustomerTO customerTO = new CustomerTO(null, "Dakshitha", "Matara", "981350731V");
+        CustomerTO customerTO = new CustomerTO(null, "Dakshitha", "Matara", "981350731V","0769785581","hasundra");
         Customer customer = customerTransformer.fromCustomerTO(customerTO);
         customerRepository.save(customer);
         System.out.println(customer);
