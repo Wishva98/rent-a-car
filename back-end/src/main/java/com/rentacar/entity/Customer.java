@@ -31,4 +31,10 @@ public class Customer implements SuperEntity {
     @OneToMany(mappedBy = "customer")
     private Set<Rent> rentSet;
 
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @Setter(AccessLevel.NONE)
+    @OneToMany(mappedBy = "customer")
+    private Set<Reservation> reservationSet;
+
 }

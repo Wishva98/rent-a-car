@@ -1,5 +1,7 @@
 package com.rentacar.service.impl;
 
+import com.rentacar.entity.Customer;
+import com.rentacar.repository.CustomerRepository;
 import com.rentacar.repository.RentRepository;
 import com.rentacar.service.custom.CustomerService;
 import com.rentacar.service.util.RentTransformer;
@@ -9,6 +11,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 //@Transactional
@@ -22,6 +26,9 @@ class CustomerServiceImplTest {
 
    @Autowired
    private RentTransformer rentTransformer;
+
+   @Autowired
+   private CustomerRepository customerRepository;
 
     @BeforeEach
     void setUp() {
@@ -56,6 +63,7 @@ class CustomerServiceImplTest {
 
     @Test
     void getAllCustomers() {
+
     }
 
     @Test
@@ -64,5 +72,13 @@ class CustomerServiceImplTest {
 
     @Test
     void updateCustomer() {
+    }
+
+    @Test
+    void getCustomerByContact(){
+        Customer customer = customerRepository.findCustomerByContactNo("0769785581");
+        System.out.println(customer.getContactNo());
+        assertEquals(customer.getFullName(), "Dakshitha 2");
+
     }
 }
