@@ -4,7 +4,11 @@ import com.rentacar.entity.Customer;
 import com.rentacar.to.CustomerTO;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
+import org.modelmapper.TypeMap;
+import org.modelmapper.spi.Mapping;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class CustomerTransformer {
@@ -12,29 +16,7 @@ public class CustomerTransformer {
 
     public CustomerTransformer(ModelMapper mapper) {
         this.mapper = mapper;
-//        mapper.typeMap(CustomerTO.class, Customer.class).addMapping(customerTO->{
-////            System.out.println(customerTO);
-////            String contactNo = customerTO.getContactNo();
-////            if(contactNo.length()==9)return "0"+contactNo;
-////            if(contactNo.length()==10)return contactNo;
-////            else return "0"+contactNo.substring(3);
-//            return "100";
-//        },(customer,o) -> customer.setContactNo((String) o));
 
-//        mapper.typeMap(CustomerTO.class, Customer.class).addMapping(CustomerTO::getContactNo,(customer, o) -> customer.setContactNo(convertContact((String) o)));
-
-//        mapper.typeMap(CustomerTO.class, Customer.class).setConverter(ctx->{
-//            String contactNo = ctx.getSource().getContactNo();
-//            ctx.getDestination().setContactNo(contactNo);
-//            return ctx.getDestination();
-//        });
-
-//        mapper.addMappings(new PropertyMap<CustomerTO, Customer>() {
-//            @Override
-//            protected void configure() {
-//                map().setContactNo(convertContact(source.getContactNo()));
-//            }
-//        });
     }
 
     private static String convertContact(String contactNo) {

@@ -8,12 +8,14 @@ import com.rentacar.repository.RentRepository;
 import com.rentacar.service.custom.RentService;
 import com.rentacar.service.util.RentTransformer;
 import com.rentacar.to.RentTO;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Service
 public class RentServiceImpl implements RentService{
 
     private final RentTransformer rentTransformer;
