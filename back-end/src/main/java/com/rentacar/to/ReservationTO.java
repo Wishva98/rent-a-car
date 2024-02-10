@@ -30,6 +30,8 @@ public class ReservationTO implements Serializable {
     private Boolean reservationStatus;
     @NotNull(message = "vehicle should not be null")
     private Set<VehicleTO> vehicleSet;
+    @NotNull(message = "Reservation should have a customer")
+    private CustomerTO customerTO;
 
     //toDo: future dates validation part
 

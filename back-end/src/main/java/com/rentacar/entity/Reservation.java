@@ -37,6 +37,10 @@ public class Reservation implements SuperEntity{
             inverseJoinColumns = @JoinColumn(name = "vehicle_id",referencedColumnName = "id"))
     private Set<Vehicle> vehicleSet;
 
+    @ManyToOne
+    @JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false)
+    private Customer customer;
+
     public Reservation(int id, Date reservationDate, Date pickupDate, Date returnDate, int noOfDays, String cancellationDetails,Boolean reservationStatus) {
         this.id = id;
         this.reservationDate = reservationDate;
