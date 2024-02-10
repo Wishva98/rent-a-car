@@ -13,6 +13,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CustomerTO implements Serializable {
+//    (null, "Dakshitha", "Ranawaka", "266/2","Matara", "Sri Lanka", "981350731V")
     // Todo : ?
     private Integer id;
     @NotBlank(message = "First name Should not be null")

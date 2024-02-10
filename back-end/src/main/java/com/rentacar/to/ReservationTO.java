@@ -1,9 +1,16 @@
 package com.rentacar.to;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ReservationTO implements Serializable {
     private Integer id;
     @NotNull(message = "Reservation date should not be null")
@@ -19,6 +26,7 @@ public class ReservationTO implements Serializable {
     private int noOfDays;
 
     private String cancellationDetails;
+    private Boolean reservationStatus;
     @NotNull(message = "vehicle should not be null")
     private VehicleTO vehicle;
 

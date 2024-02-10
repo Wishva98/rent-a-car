@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 import java.util.Set;
 
 @Data
@@ -29,8 +29,21 @@ public class Reservation implements SuperEntity{
     private int noOfDays;
     @Column
     private String cancellationDetails;
+    @Column
+    private Boolean reservationStatus;
 
-    @ManyToOne
-    @JoinColumn(name = "vehicle_id",referencedColumnName = "id", nullable = false)
-    private Set<Vehicle> rentSet;
+    @ManyToMany
+    @JoinTable(name = "vehicle_reservation",joinColumns = @JoinColumn(name = "reservation_id",referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "vehicle_id",referencedColumnName = "id"))
+    private Set<Vehicle> vehicleSet;
+
+    public Reservation(int id, Date reservationDate, Date pickupDate, Date returnDate, int noOfDays, String cancellationDetails,Boolean reservationStatus) {
+        this.id = id;
+        this.reservationDate = reservationDate;
+        this.pickupDate = pickupDate;
+        this.returnDate = returnDate;
+        this.noOfDays = noOfDays;
+        this.cancellationDetails = cancellationDetails;
+        this.reservationStatus=reservationStatus;
+    }
 }

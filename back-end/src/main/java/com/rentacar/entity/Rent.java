@@ -15,6 +15,7 @@ import java.math.BigDecimal;
 @Table(name = "rent")
 public class Rent implements SuperEntity{
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(nullable = false, columnDefinition = "ENUM('VISA', 'CASH', 'BANK')")
     @Enumerated(EnumType.STRING)
@@ -23,7 +24,7 @@ public class Rent implements SuperEntity{
     private BigDecimal rentPrice;
     @Column(name = "damage_compensation")
     private BigDecimal damageCompensation;
-    @Column(name = "damage_details" )
+    @Column(name = "damage_details")
     private String damageDetails;
     @Column
     private BigDecimal total;
@@ -31,5 +32,6 @@ public class Rent implements SuperEntity{
     @ManyToOne
     @JoinColumn(name = "customer_id",referencedColumnName = "id", nullable = false)
     private Customer customer;
+
 
 }

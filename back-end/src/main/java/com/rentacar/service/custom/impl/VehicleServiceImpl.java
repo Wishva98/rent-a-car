@@ -1,9 +1,13 @@
-package com.rentacar.service;
+package com.rentacar.service.custom.impl;
 
+import com.rentacar.entity.Rent;
 import com.rentacar.entity.Vehicle;
+import com.rentacar.exception.AppException;
 import com.rentacar.repository.VehicleRepository;
+import com.rentacar.service.custom.VehicleService;
+import com.rentacar.service.util.VehicleTransformer;
+import com.rentacar.to.RentTO;
 import com.rentacar.to.VehicleTO;
-import com.rentacar.util.Varlist;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,18 +20,17 @@ import java.util.Optional;
 
 @Service
 @Transactional
-public class VehicleServiceImpl implements VehicleService{
+public class VehicleServiceImpl implements VehicleService {
     @Autowired
     private VehicleRepository vehicleRepository;
     @Autowired
-    private ModelMapper modelMapper;
+    private VehicleTransformer vehicleTransformer;
     @Override
-    public VehicleTO createVehicle(VehicleTO vehicleTO)
+    public VehicleTO createVehicle(VehicleTO vehicleTO,MultipartFile imageFile)
     {
-        if(vehicleRepository.exitByPlateNo(vehicleTO.getPlateNo())){
+        if(vehicleRepository.existsByPlateNo(vehicleTO.getPlateNo())){
             return null;
         }else {
-            MultipartFile imageFile = vehicleTO.getImageFile();
             if (imageFile != null && !imageFile.isEmpty()) {
                 try {
                     vehicleTO.setImage(imageFile.getBytes());
@@ -35,15 +38,22 @@ public class VehicleServiceImpl implements VehicleService{
                     throw new RuntimeException(e);
                 }
             }
-            vehicleRepository.save(modelMapper.map(vehicleTO, Vehicle.class));
+            vehicleRepository.save(vehicleTransformer.fromVehicleTo(vehicleTO));
             return vehicleTO;
         }
     }
     @Override
-    public VehicleTO updateVehicle(VehicleTO vehicleTO)
+    public VehicleTO updateVehicle(VehicleTO vehicleTO,MultipartFile imageFile)
     {
         if(vehicleRepository.existsById(vehicleTO.getId())){
-            vehicleRepository.save(modelMapper.map(vehicleTO, Vehicle.class));
+            if (imageFile != null && !imageFile.isEmpty()) {
+                try {
+                    vehicleTO.setImage(imageFile.getBytes());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            vehicleRepository.save(vehicleTransformer.fromVehicleTo(vehicleTO));
             return vehicleTO;
         }else{
             return null;
@@ -66,7 +76,9 @@ public class VehicleServiceImpl implements VehicleService{
     public VehicleTO getVehicleById(Integer id)
     {
         Optional<Vehicle> optionalVehicle = vehicleRepository.findById(id);
-        return optionalVehicle.map(vehicle -> modelMapper.map(vehicle, VehicleTO.class)).orElse(null);
+        if(optionalVehicle.isEmpty())throw new AppException(500,"Vehicle does not exist");
+        Vehicle vehicle=optionalVehicle.get();
+        return  vehicleTransformer.toVehicleTO(vehicle);
     }
     @Override
     public List<Vehicle> searchByModel(String model)

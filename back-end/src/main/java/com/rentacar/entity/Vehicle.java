@@ -20,20 +20,36 @@ public class Vehicle implements SuperEntity{
     private String plateNo;
     @Column(name = "model", nullable = false)
     private String model;
+    @Column
+    private int rentPerDay;
     @Column//(name = "image", nullable = false)
     @Lob
     private byte[] image;
     @Column
-    private MultipartFile imageFile;
-    @Column
     private int millage;
-    @Column
+    @Column(name = "`condition`")
     private String condition;
+    @Column(name = "`description`")
+    private String description;
     @Column(name = "availability",nullable = false)
     private Boolean availability;
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    @OneToMany(mappedBy = "vehicle")
+    @ManyToMany(mappedBy = "vehicleSet")
     private Set<Reservation> rentSet;
+
+
+    public Vehicle(int id, String plateNo, String model,int rentPerDay, byte[] image, int millage, String condition,String description, Boolean availability) {
+        this.id = id;
+        this.plateNo = plateNo;
+        this.model = model;
+        this.rentPerDay=rentPerDay;
+        this.image = image;
+        this.millage = millage;
+        this.condition = condition;
+        this.description=description;
+        this.availability = availability;
+    }
 }
+

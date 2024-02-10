@@ -1,10 +1,8 @@
 package com.rentacar.api;
 
 import com.rentacar.entity.Vehicle;
-import com.rentacar.repository.VehicleRepository;
-import com.rentacar.service.VehicleService;
+import com.rentacar.service.custom.VehicleService;
 import com.rentacar.to.VehicleTO;
-import com.rentacar.util.Varlist;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,16 +13,16 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @RestController
-@RequestMapping("api/vi/vehicle")
+@RequestMapping("/api/vi/vehicle")
 public class VehicleController {
 
     @Autowired
     private VehicleService vehicleService;
     @PostMapping(value = "/saveVehicle")
-    public ResponseEntity<VehicleTO> saveVehicle(@RequestBody VehicleTO vehicleTO)//
+    public ResponseEntity<VehicleTO> saveVehicle(@RequestBody VehicleTO vehicleTO,@RequestParam("imageFile") MultipartFile imageFile)
     {
         try{
-            VehicleTO vehicle=vehicleService.createVehicle(vehicleTO);
+            VehicleTO vehicle=vehicleService.createVehicle(vehicleTO,imageFile);
             if(vehicle!=null){
                 return new ResponseEntity<>(vehicleTO,HttpStatus.CREATED);
             }else{
@@ -35,11 +33,11 @@ public class VehicleController {
         }
     }
     @PutMapping(value ="/updateVehicle/{id}")
-    public ResponseEntity<?> updateVehicle(@PathVariable Integer id)
+    public ResponseEntity<?> updateVehicle(@PathVariable Integer id,@RequestParam("imageFile") MultipartFile imageFile)
     {
         try{
             VehicleTO vehicleTO=vehicleService.getVehicleById(id);
-            VehicleTO vehicle=vehicleService.updateVehicle(vehicleTO);
+            VehicleTO vehicle=vehicleService.updateVehicle(vehicleTO,imageFile);
             if(vehicle!=null){
                 return new ResponseEntity<>(vehicleTO, HttpStatus.OK);
             }else{
@@ -74,7 +72,7 @@ public class VehicleController {
         List<Vehicle> vehicles = vehicleService.searchByModel(model);
         return ResponseEntity.ok(vehicles);
     }
-    @GetMapping(value ="/getAllVehicle/")
+    @GetMapping(value ="/getAllVehicle/{millage}")
     public ResponseEntity<List<Vehicle>> getVehicleByMillage(@PathVariable Integer millage)
     {
         List<Vehicle> vehicles = vehicleService.searchByMillage(millage);

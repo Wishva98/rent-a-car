@@ -23,15 +23,16 @@ public class VehicleTO implements Serializable {
     private String plateNo;
     @NotNull(message = "Model number should not be null")
     private String model;
+    @NotNull(message = "Rent per day should not be null")
+    private Integer rentPerDay;
 
    // @Size(min = 1)
     private byte[] image;
 
-    private MultipartFile imageFile;
-
     private int millage;
 
     private String condition;
+    private String description;
 
     @NotNull(message = "Availability should not be null")
     private Boolean availability;
