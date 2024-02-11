@@ -41,7 +41,7 @@ public class CustomerController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping(consumes = "application/json")
     public void updateCustomer(@RequestBody @Validated CustomerTO customerTO){
-
+        customerService.updateCustomer(customerTO);
     }
 
 }
