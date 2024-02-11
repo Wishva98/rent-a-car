@@ -34,6 +34,8 @@ public class CustomerTO implements Serializable {
     private String email;
 
     public String getContactNo() {
-        return "0"+contactNo.substring(contactNo.length()-9);
+        if (contactNo != null && contactNo.length() == 9) return "0" + contactNo;
+        if (contactNo != null && contactNo.length() == 12) return "0" + contactNo.substring(3);
+        else return contactNo;
     }
 }

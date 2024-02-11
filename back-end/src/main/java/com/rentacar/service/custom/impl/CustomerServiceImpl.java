@@ -17,9 +17,9 @@ import java.util.stream.Collectors;
 @Transactional
 public class CustomerServiceImpl implements CustomerService {
 
-//    @Autowired
+    //    @Autowired
     private CustomerRepository customerRepository;
-//    @Autowired
+    //    @Autowired
     private CustomerTransformer customerTransformer;
 
     public CustomerServiceImpl(CustomerRepository customerRepository, CustomerTransformer customerTransformer) {
@@ -30,33 +30,43 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public CustomerTO saveCustomer(CustomerTO customerTO) {
         Customer customer = customerTransformer.fromCustomerTO(customerTO);
+
+        //BY contact Number
+        Optional<Customer> existingCustomer = customerRepository.findCustomerByContactNo(customer.getContactNo());
+        if (existingCustomer.isPresent() && existingCustomer.get().getDrivingLicenseNumber().equals(customer.getDrivingLicenseNumber()) && existingCustomer.get().getEmail().equals(customer.getEmail()))
+            throw new AppException(500, "Customer already registered");
+        if (!existingCustomer.isEmpty()) throw new AppException(500, "Contact number already registered");
+
+        //By Driving License Number
+        existingCustomer = customerRepository.findCustomerByDrivingLicenseNumber(customer.getDrivingLicenseNumber());
+        if (!existingCustomer.isEmpty()) throw new AppException(500, "Driving license number already registered");
+
+        //By email
+        existingCustomer = customerRepository.findCustomerByEmail(customer.getEmail());
+        if (!existingCustomer.isEmpty()) throw new AppException(500, "Email address already registered");
+
+        Customer savedCustomer;
         try {
-            Customer savedCustomer = customerRepository.save(customer);
-            customerTO.setId(savedCustomer.getId());
-            if(savedCustomer != null){
-                return customerTO;
-            }else {
-                throw new RuntimeException("Customer Saving Incomplete");
-            }
-        }catch (Exception e){
+            savedCustomer = customerRepository.save(customer);
+        } catch (Exception e) {
             throw new AppException(500, "Could not save customer");
+        }
+
+        if (savedCustomer != null) {
+            customerTO.setId(savedCustomer.getId());
+            return customerTO;
+        } else {
+            throw new RuntimeException("Customer Saving Incomplete");
         }
 
     }
 
     @Override
     public CustomerTO getCustomerById(Integer customerId) {
-        try{
             Optional<Customer> optionalCustomer = customerRepository.findById(customerId);
-            if(optionalCustomer.isEmpty())throw new AppException(500, "Could not find customer");
-//            System.out.println();
-//            System.out.println("This is the rent set = "+optionalCustomer.get().getRentSet());
+            if (optionalCustomer.isEmpty()) throw new AppException(500, "Could not find customer");
             CustomerTO customerTO = customerTransformer.toCustomerTO(optionalCustomer.get());
             return customerTO;
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-            throw new AppException(500, "Internal Error");
-        }
     }
 
     @Override
@@ -64,7 +74,7 @@ public class CustomerServiceImpl implements CustomerService {
         try {
             List<CustomerTO> customerTOList;
             List<Customer> customerList = customerRepository.findAll();
-            customerTOList = customerList.stream().map(customer ->{
+            customerTOList = customerList.stream().map(customer -> {
                 CustomerTO customerTO = customerTransformer.toCustomerTO(customer);
                 return customerTO;
             }).collect(Collectors.toList());
@@ -76,9 +86,9 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void deleteCustomerById(Integer customerId) {
-        if(customerRepository.existsById(customerId)){
+        if (customerRepository.existsById(customerId)) {
             customerRepository.deleteById(customerId);
-        }else {
+        } else {
             throw new AppException(500, "Customer does not exist");
         }
     }
@@ -86,7 +96,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public void updateCustomer(CustomerTO customerTO) {
         Optional<Customer> optCustomer = customerRepository.findById(customerTO.getId());
-        if(optCustomer.isEmpty())throw new AppException(500, "Customer does not exist");
+        if (optCustomer.isEmpty()) throw new AppException(500, "Customer does not exist");
         Customer customer = optCustomer.get();//Todo :  use when considering relationships;
 //        customer.setFirstName(customerTO.getFirstName());
 //        customer.setLastName(customerTO.getLastName());

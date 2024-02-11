@@ -14,6 +14,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class RentServiceImplTest {
@@ -47,7 +49,7 @@ class RentServiceImplTest {
 
     @Test
     void saveRent() {
-        Customer customer = customerRepository.findCustomerByContactNo("0769785581");
+        Optional<Customer> customerByContactNo = customerRepository.findCustomerByContactNo("0769785581");
 
     }
 

@@ -12,6 +12,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
@@ -76,9 +78,9 @@ class CustomerServiceImplTest {
 
     @Test
     void getCustomerByContact(){
-        Customer customer = customerRepository.findCustomerByContactNo("0769785581");
-        System.out.println(customer.getContactNo());
-        assertEquals(customer.getFullName(), "Dakshitha 2");
+        Optional<Customer> optCustomer = customerRepository.findCustomerByContactNo("0769785581");
+        System.out.println(optCustomer.get().getContactNo());
+        assertEquals(optCustomer.get().getFullName(), "Dakshitha 2");
 
     }
 }
