@@ -1,5 +1,7 @@
 package com.rentacar.service.impl;
 
+import com.rentacar.entity.Customer;
+import com.rentacar.repository.CustomerRepository;
 import com.rentacar.repository.RentRepository;
 import com.rentacar.service.custom.CustomerService;
 import com.rentacar.service.util.RentTransformer;
@@ -9,6 +11,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 //@Transactional
@@ -23,6 +29,9 @@ class CustomerServiceImplTest {
    @Autowired
    private RentTransformer rentTransformer;
 
+   @Autowired
+   private CustomerRepository customerRepository;
+
     @BeforeEach
     void setUp() {
     }
@@ -33,7 +42,7 @@ class CustomerServiceImplTest {
 
     @Test
     void saveCustomer() {
-        CustomerTO customerTO = new CustomerTO(null, "Dakshitha 2", "Ranawaka", "266/2", "Matara", "Sri Lanka", "981350731V");
+        CustomerTO customerTO = new CustomerTO(null, "Dakshitha 2", "Matara", "981350731V","769785581","hasundra");
         CustomerTO savedCustomerTO = customerService.saveCustomer(customerTO);
         System.out.println(savedCustomerTO);
     }
@@ -56,6 +65,7 @@ class CustomerServiceImplTest {
 
     @Test
     void getAllCustomers() {
+
     }
 
     @Test
@@ -64,5 +74,13 @@ class CustomerServiceImplTest {
 
     @Test
     void updateCustomer() {
+    }
+
+    @Test
+    void getCustomerByContact(){
+        Optional<Customer> optCustomer = customerRepository.findCustomerByContactNo("0769785581");
+        System.out.println(optCustomer.get().getContactNo());
+        assertEquals(optCustomer.get().getFullName(), "Dakshitha 2");
+
     }
 }

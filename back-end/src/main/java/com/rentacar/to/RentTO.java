@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Data
-//@AllArgsConstructor
+@AllArgsConstructor
 @NoArgsConstructor
 public class RentTO implements Serializable {
     //todo:  null or not auto generated or no?
@@ -25,6 +25,8 @@ public class RentTO implements Serializable {
     //Todo: customer or customer id?
     @NotNull(message = "Customer should not be null")
     private CustomerTO customer;
+    @NotNull(message = "Reservation should not be null")
+    private ReservationTO reservation;
 
     // Todo : should include reservation details?
 

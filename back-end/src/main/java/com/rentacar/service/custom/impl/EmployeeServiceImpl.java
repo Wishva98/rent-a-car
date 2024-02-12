@@ -44,7 +44,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public void updateEmployee(EmployeeTO employeeTO) {
-        employeeRepository.findById(employeeTO.getId()).orElseThrow(()->new AppException(404,"There is no Employess by this ID"));
+        employeeRepository.findById(employeeTO.getId()).orElseThrow(()->new AppException(404,"There is no Employees by this ID"));
         Employee employee = employeeTransformer.toEmployee(employeeTO);
         if (employeeTO.getContacts().isEmpty()){
             employeeRepository.save(employee);

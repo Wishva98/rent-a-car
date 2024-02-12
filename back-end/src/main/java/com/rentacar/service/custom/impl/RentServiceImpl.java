@@ -5,31 +5,36 @@ import com.rentacar.entity.Rent;
 import com.rentacar.exception.AppException;
 import com.rentacar.repository.CustomerRepository;
 import com.rentacar.repository.RentRepository;
+import com.rentacar.repository.ReservationRepository;
 import com.rentacar.service.custom.RentService;
 import com.rentacar.service.util.RentTransformer;
 import com.rentacar.to.RentTO;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Service
 public class RentServiceImpl implements RentService{
 
     private final RentTransformer rentTransformer;
     private final CustomerRepository customerRepository;
     private final RentRepository rentRepository;
-
-    public RentServiceImpl(RentTransformer rentTransformer, CustomerRepository customerRepository, RentRepository rentRepository) {
+    private final ReservationRepository reservationRepository;
+    public RentServiceImpl(RentTransformer rentTransformer, CustomerRepository customerRepository, RentRepository rentRepository, ReservationRepository reservationRepository) {
         this.rentTransformer = rentTransformer;
         this.customerRepository = customerRepository;
         this.rentRepository = rentRepository;
+        this.reservationRepository = reservationRepository;
     }
 
     @Override
     public RentTO saveRent(RentTO rentTO) {
         if(!customerRepository.existsById(rentTO.getCustomer().getId()))throw new AppException(500, "Invalid customer");
         if(rentTO.getId() != null)throw new AppException(500,"Rent id has to be null");
+        if(!reservationRepository.existsById(rentTO.getReservation().getId()))throw new AppException(500,"Invalid reservation Id");
         //todo : check for reservation details
         Rent rent = rentTransformer.fromRentTo(rentTO);
         try {

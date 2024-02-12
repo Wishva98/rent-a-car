@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -28,7 +29,9 @@ public class ReservationTO implements Serializable {
     private String cancellationDetails;
     private Boolean reservationStatus;
     @NotNull(message = "vehicle should not be null")
-    private VehicleTO vehicle;
+    private Set<VehicleTO> vehicleSet;
+    @NotNull(message = "Reservation should have a customer")
+    private CustomerTO customerTO;
 
     //toDo: future dates validation part
 

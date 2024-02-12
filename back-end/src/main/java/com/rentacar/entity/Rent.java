@@ -33,5 +33,7 @@ public class Rent implements SuperEntity{
     @JoinColumn(name = "customer_id",referencedColumnName = "id", nullable = false)
     private Customer customer;
 
-
+    @OneToOne
+    @JoinColumn(referencedColumnName = "id", name = "reservation_id", nullable = false, unique = true)
+    private Reservation reservation;
 }

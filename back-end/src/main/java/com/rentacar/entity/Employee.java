@@ -31,6 +31,12 @@ public class Employee implements SuperEntity{
     @Setter(AccessLevel.NONE)
     private Set<Contact> contacts;
 
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @Setter(AccessLevel.NONE)
+    private Set<Vehicle> vehicleSet;
+
     public Employee(String nic, String email, String fullName, String address) {
         this.nic = nic;
         this.email = email;

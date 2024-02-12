@@ -34,10 +34,14 @@ public class Vehicle implements SuperEntity{
     @Column(name = "availability",nullable = false)
     private Boolean availability;
 
+    @ManyToOne
+    @JoinColumn(name = "employee_id", referencedColumnName = "id", nullable = false)
+    private Employee employee;
+
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @ManyToMany(mappedBy = "vehicleSet")
-    private Set<Reservation> rentSet;
+    private Set<Reservation> reservationSet;
 
 
     public Vehicle(int id, String plateNo, String model,int rentPerDay, byte[] image, int millage, String condition,String description, Boolean availability) {
