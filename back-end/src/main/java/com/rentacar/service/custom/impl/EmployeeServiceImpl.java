@@ -65,21 +65,28 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeTO getEmployeeDetails(Integer id) {
         Employee employee = employeeRepository.findById(id).orElseThrow(() -> new AppException(404, "There is no employee by this id"));
-        Set<Contact> contactByEmployee = contactRepository.findContactByEmployee(employee);
-        EmployeeTO employeeTO = employeeTransformer.fromEmployee(employee);
-        HashSet<String> contactSet = new HashSet<>();
-        for (Contact contact : contactByEmployee) {
-            contactSet.add(contact.getContactNo());
-        }
-        employeeTO.setContacts(contactSet);
-        return employeeTO;
+        return addContacts(employee);
     }
 
     @Override
     public List<EmployeeTO> getAllEmployees() {
         List<Employee> employeeList = employeeRepository.findAll();
 
-        return employeeList.stream().map(employeeTransformer::fromEmployee).collect(Collectors.toList());
+        return employeeList.stream().map(this::addContacts).collect(Collectors.toList());
+    }
+
+    private EmployeeTO addContacts(Employee employee){
+        Set<Contact> contactByEmployee = contactRepository.findContactByEmployee(employee);
+        EmployeeTO employeeTO = employeeTransformer.fromEmployee(employee);
+        if (!contactByEmployee.isEmpty()){
+            HashSet<String> contactSet = new HashSet<>();
+            for (Contact contact : contactByEmployee) {
+                contactSet.add(contact.getContactNo());
+            }
+            employeeTO.setContacts(contactSet);
+            return employeeTO;
+        }else return employeeTO;
+
     }
 
 
