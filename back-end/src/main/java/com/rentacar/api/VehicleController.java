@@ -2,6 +2,7 @@ package com.rentacar.api;
 
 import com.rentacar.entity.Vehicle;
 import com.rentacar.service.custom.VehicleService;
+import com.rentacar.to.ReservationTO;
 import com.rentacar.to.VehicleTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,29 +20,31 @@ public class VehicleController {
     @Autowired
     private VehicleService vehicleService;
     @PostMapping(value = "/saveVehicle")
-    public ResponseEntity<VehicleTO> saveVehicle(@RequestBody VehicleTO vehicleTO,@RequestParam("imageFile") MultipartFile imageFile)
+    public ResponseEntity<VehicleTO> saveVehicle(  @RequestPart("vehicleTo") VehicleTO vehicleTo,
+                                                   @RequestPart("imageFile") MultipartFile imageFile)
     {
         try{
-            VehicleTO vehicle=vehicleService.createVehicle(vehicleTO,imageFile);
+            VehicleTO vehicle=vehicleService.createVehicle(vehicleTo,imageFile);
             if(vehicle!=null){
-                return new ResponseEntity<>(vehicleTO,HttpStatus.CREATED);
+                return new ResponseEntity<>(vehicle,HttpStatus.CREATED);
             }else{
-                return new ResponseEntity<>(vehicleTO,HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
             }
         }catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @PutMapping(value ="/updateVehicle/{id}")
-    public ResponseEntity<?> updateVehicle(@PathVariable Integer id,@RequestParam("imageFile") MultipartFile imageFile)
+    @PatchMapping(value ="/updateVehicle/{id}")
+    public ResponseEntity<?> updateVehicle(  @RequestPart("vehicleTo") VehicleTO vehicleTo,
+                                             @RequestPart("imageFile") MultipartFile imageFile)
     {
         try{
-            VehicleTO vehicleTO=vehicleService.getVehicleById(id);
-            VehicleTO vehicle=vehicleService.updateVehicle(vehicleTO,imageFile);
+           // VehicleTO vehicleTO=vehicleService.getVehicleById(id);
+            VehicleTO vehicle=vehicleService.updateVehicle(vehicleTo,imageFile);
             if(vehicle!=null){
-                return new ResponseEntity<>(vehicleTO, HttpStatus.OK);
+                return new ResponseEntity<>(vehicleTo, HttpStatus.OK);
             }else{
-                return new  ResponseEntity<>(vehicleTO,HttpStatus.BAD_REQUEST);
+                return new  ResponseEntity<>(vehicleTo,HttpStatus.BAD_REQUEST);
             }
         }catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -59,8 +62,22 @@ public class VehicleController {
             return new ResponseEntity<>("An unexpected error occurred", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @GetMapping("/getVehicle/{id}")
+    public  ResponseEntity<VehicleTO> getVehicle(@PathVariable int id)
+    {
+        try{
+             VehicleTO vehicleTO=vehicleService.getVehicleById(id);
+            if(vehicleTO!=null){
+                return new ResponseEntity<>(vehicleTO, HttpStatus.OK);
+            }else{
+                return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
+            }
+        }catch(Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
-    @GetMapping(value ="/getAllVehicle/")
+    @GetMapping(value ="/getAllVehicle")
     public ResponseEntity<List<Vehicle>> getAllVehicles()
     {
         List<Vehicle> vehicles = vehicleService.getAllVehicles();
@@ -72,7 +89,7 @@ public class VehicleController {
         List<Vehicle> vehicles = vehicleService.searchByModel(model);
         return ResponseEntity.ok(vehicles);
     }
-    @GetMapping(value ="/getAllVehicle/{millage}")
+    @GetMapping(value ="/searchByMillage/{millage}")
     public ResponseEntity<List<Vehicle>> getVehicleByMillage(@PathVariable Integer millage)
     {
         List<Vehicle> vehicles = vehicleService.searchByMillage(millage);
