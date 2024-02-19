@@ -4,8 +4,10 @@ import com.rentacar.entity.Vehicle;
 import com.rentacar.service.custom.VehicleService;
 import com.rentacar.to.ReservationTO;
 import com.rentacar.to.VehicleTO;
+import org.junit.jupiter.params.shadow.com.univocity.parsers.annotations.Validate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,8 +21,8 @@ public class VehicleController {
 
     @Autowired
     private VehicleService vehicleService;
-    @PostMapping(value = "/saveVehicle")
-    public ResponseEntity<VehicleTO> saveVehicle(  @RequestPart("vehicleTo") VehicleTO vehicleTo,
+    @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<VehicleTO> saveVehicle( @RequestPart("vehicleTo")  VehicleTO vehicleTo,
                                                    @RequestPart("imageFile") MultipartFile imageFile)
     {
         try{
@@ -34,8 +36,8 @@ public class VehicleController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @PatchMapping(value ="/updateVehicle/{id}")
-    public ResponseEntity<?> updateVehicle(  @RequestPart("vehicleTo") VehicleTO vehicleTo,
+    @PatchMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<?> updateVehicle( @RequestPart("vehicleTo") VehicleTO vehicleTo,
                                              @RequestPart("imageFile") MultipartFile imageFile)
     {
         try{
@@ -50,7 +52,7 @@ public class VehicleController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @DeleteMapping(value ="/deleteVehicle/{id}")
+    @DeleteMapping(value ="/{id}")
     public ResponseEntity<?> deleteVehicle(@PathVariable Integer id)
     {
         try{
@@ -62,7 +64,7 @@ public class VehicleController {
             return new ResponseEntity<>("An unexpected error occurred", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @GetMapping("/getVehicle/{id}")
+    @GetMapping(value = "/{id}")
     public  ResponseEntity<VehicleTO> getVehicle(@PathVariable int id)
     {
         try{
@@ -77,19 +79,19 @@ public class VehicleController {
         }
     }
 
-    @GetMapping(value ="/getAllVehicle")
+    @GetMapping
     public ResponseEntity<List<Vehicle>> getAllVehicles()
     {
         List<Vehicle> vehicles = vehicleService.getAllVehicles();
         return ResponseEntity.ok(vehicles);
     }
-    @GetMapping(value ="/searchByModel/{model}")
+    @GetMapping(value ="/{model}")
     public ResponseEntity<List<Vehicle>> getVehicleByModel(@PathVariable String model)
     {
         List<Vehicle> vehicles = vehicleService.searchByModel(model);
         return ResponseEntity.ok(vehicles);
     }
-    @GetMapping(value ="/searchByMillage/{millage}")
+    @GetMapping(value ="/{millage}")
     public ResponseEntity<List<Vehicle>> getVehicleByMillage(@PathVariable Integer millage)
     {
         List<Vehicle> vehicles = vehicleService.searchByMillage(millage);

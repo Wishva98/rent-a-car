@@ -5,6 +5,7 @@ import com.rentacar.service.custom.ReservationService;
 import com.rentacar.to.ReservationTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +17,7 @@ import java.util.NoSuchElementException;
 public class ReservationApi {
     @Autowired
     ReservationService reservationService;
-    @PostMapping("/saveReservation")
+    @PostMapping(consumes = "application/json")
     public ResponseEntity<ReservationTO> saveReservation(@RequestBody ReservationTO reservationTO)
     {
         try{
@@ -30,7 +31,7 @@ public class ReservationApi {
             return  new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
            }
     }
-    @PatchMapping("/updateReservation/")
+    @PatchMapping(consumes = "application/json",produces = "application/json")
     public ResponseEntity<ReservationTO> updateReservation(@RequestBody ReservationTO reservationTO)
     {
         try{
@@ -46,7 +47,7 @@ public class ReservationApi {
         }
 
     }
-    @DeleteMapping("/deleteReservation/{id}")
+    @DeleteMapping(value = "/{id}",produces ="application/json" )
     public ResponseEntity<?> deleteReservation(@PathVariable int id)
     {
         try{
@@ -58,7 +59,7 @@ public class ReservationApi {
             return new ResponseEntity<>("An unexpected error occurred", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @GetMapping("/getReservation/{id}")
+    @GetMapping("/{id}")
     public  ResponseEntity<ReservationTO> getReservation(@PathVariable int id)
     {
         try{
@@ -72,7 +73,7 @@ public class ReservationApi {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @GetMapping("/getAllReservations")
+    @GetMapping(produces ="application/json" )
     public  ResponseEntity<List<Reservation>> getAllReservation()
     {
         List <Reservation>reservationList=reservationService.getAllReservations();
