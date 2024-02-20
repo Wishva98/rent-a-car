@@ -28,7 +28,7 @@ public class VehicleServiceImpl implements VehicleService {
     @Override
     public VehicleTO createVehicle(VehicleTO vehicleTO,MultipartFile imageFile)
     {
-        if(vehicleRepository.existsByPlateNo(vehicleTO.getPlateNo())){
+        if(vehicleRepository.existsById(vehicleTO.getId()) && vehicleRepository.existsByPlateNo(vehicleTO.getPlateNo())){
             return null;
         }else {
             if (imageFile != null && !imageFile.isEmpty()) {
